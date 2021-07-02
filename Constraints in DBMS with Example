@@ -1,3 +1,4 @@
+These SQL Commands will run only on MYSQL Server
 'create schema university'
 create database university2
 
