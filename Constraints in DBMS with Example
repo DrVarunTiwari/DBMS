@@ -1,0 +1,60 @@
+'create schema university'
+create database university2
+
+use university2
+
+'Not null'
+create table employee(eid int not null primary key,ename varchar(20) not null, eaddress varchar(20) not null,edesig varchar(30) not null,eage int not null)
+insert into employee values(101,'ravi','giri nagar','clerk',32)
+insert into employee values(102,'harish','pratap nagar','manager',34)
+insert into employee values(103,'kavish','rudra nagar','accountant',33)
+insert into employee values(104,'piyush','kavir nagar','peon',38)
+insert into employee values(105,'suresh','iris nagar','supervisor',32)
+insert into employee values(107,'null','iris nagar','supervisor',32)
+desc employee
+select * from employee
+select * from employee
+
+create table department(did int,dname varchar(20),dloc varchar(30),eid int,constraint f foreign key(eid) references employee(eid),primary key(did))
+desc department
+insert into department values(1001,'CSE','south delhi',101)
+insert into department values(1002,'AI','west delhi',101)
+insert into department values(1003,'CST','south delhi',102)
+insert into department values(1004,'CVE','east delhi',103)
+insert into department values(1005,'ME','west delhi',102)
+select * from Department
+
+'primary key constraints'
+create table student(sid int primary key,sname varchar(30),sage int,scourse varchar(30),ssubject varchar(40),sphone bigint unique)
+desc student
+insert into student values(11000,'amanjeet',20,'BCA','C',9999000099)
+insert into student values(11001,'roma',21,'MCA','DE',8989898989)
+insert into student values(11002,'gaurav',22,'BCA','MATH',7878787878)
+insert into student values(11003,'manu',22,'MCA','SE',9999999212)
+insert into student values(11004,'jatin',25,'BCA','C',9765575757)
+insert into student values(11005,'ajit',23,'MCA','Java',null)
+select * from student
+
+'foreign key constraints'
+create table teacher(tid int primary key,tname varchar(30),tage int, tsubject varchar(30),sid int, foreign key(sid) references student(sid))
+insert into teacher values(20001,'ravi',40,'c',11001)
+insert into teacher values(20002,'vivek',36,'c',11001)
+insert into teacher values(20003,'karim',40,'Math',11002)
+insert into teacher values(20004,'sunidhi',36,'Java',11003)
+insert into teacher values(20005,'shubhash',40,'DS',11004)
+insert into teacher values(20006,'chanda',31,'DE',11005)
+
+
+select * from employee
+select * from department
+select * from student
+select * from teacher
+
+'Check Constraints'
+create table abcd(aid int,aname varchar(20),age int check (age>=18))
+insert into abcd values(102,'piyush',16)
+select * from abcd
+
+'default  constraints'
+create table abcde1(aid int,aname varchar(30),city varchar(40) default 'delhi')
+insert into abcde1 values(101,'ravi',default)
