@@ -1,0 +1,132 @@
+These SQl Commands will run on MySQL.
+
+create database university2
+use university2
+
+create table employee(eid int not null primary key,ename varchar(20) not null, eaddress varchar(20) not null,edesig varchar(30) not null,eage int not null)
+insert into employee values(101,'ravi','giri nagar','clerk',32)
+insert into employee values(102,'harish','pratap nagar','manager',34)
+insert into employee values(103,'kavish','rudra nagar','accountant',33)
+insert into employee values(104,'piyush','kavir nagar','peon',38)
+insert into employee values(105,'suresh','iris nagar','supervisor',32)
+insert into employee values(107,'null','iris nagar','supervisor',32)
+desc employee
+select * from employee
+
+
+select * from employee
+
+create table department(did int,dname varchar(20),dloc varchar(30),eid int,constraint f foreign key(eid) references employee(eid),primary key(did))
+desc department
+insert into department values(1001,'CSE','south delhi',101)
+insert into department values(1002,'AI','west delhi',101)
+insert into department values(1003,'CST','south delhi',102)
+insert into department values(1004,'CVE','east delhi',103)
+insert into department values(1005,'ME','west delhi',102)
+select * from Department
+
+create table student(sid int primary key,sname varchar(30),sage int,scourse varchar(30),ssubject varchar(40),sphone bigint unique)
+desc student
+insert into student values(11000,'amanjeet',20,'BCA','C',9999000099)
+insert into student values(11001,'roma',21,'MCA','DE',8989898989)
+insert into student values(11002,'gaurav',22,'BCA','MATH',7878787878)
+insert into student values(11003,'manu',22,'MCA','SE',9999999212)
+insert into student values(11004,'jatin',25,'BCA','C',9765575757)
+insert into student values(11005,'ajit',23,'MCA','Java',null)
+select * from student
+
+create table teacher(tid int primary key,tname varchar(30),tage int, tsubject varchar(30),sid int, foreign key(sid) references student(sid))
+insert into teacher values(20001,'vikas sir',40,'c',11001)
+insert into teacher values(20002,'varun',36,'c',11001)
+insert into teacher values(20003,'sanjay',40,'Math',11002)
+insert into teacher values(20004,'bijoy',36,'Java',11003)
+insert into teacher values(20005,'ruchi',40,'DS',11004)
+insert into teacher values(20006,'deepika',31,'DE',11005)
+
+
+select * from employee
+select * from department
+select * from student
+select * from teacher
+
+'Join'
+select * from teacher inner join student on teacher.sid=student.sid;
+select * from teacher left outer join student on teacher.tsubject=student.ssubject;
+select * from teacher right outer join student on teacher.tsubject=student.ssubject;
+select count(*) from teacher cross join student;
+select scourse,sname,tid,tsubject from student as s1,teacher t2 where s1.sid=t2.sid;
+select tid,tname,scourse,sname from teacher inner join student on teacher.sid=student.sid;
+select tid,tname,scourse,sname from teacher left outer join student on teacher.tsubject=student.ssubject;
+select tid,tname,scourse,sname from teacher right outer join student on teacher.tsubject=student.ssubject;
+insert into student1 values(11007,'Anurag',18,'BCA','Physics',8734524009);
+
+
+'union'
+select sname,ssubject from student union select tname,tage from teacher;
+select sname,ssubject,tname,tage from student inner join teacher on student.sid=teacher.sid;
+
+'view'
+create view star as select ename,dname,sname,tname from employee,department,student,teacher;
+select * from star
+
+'index'
+create index abc on teacher(tid);
+
+'group by'
+SELECT did,count(eid)  FROM department GROUP BY eid;
+select did,count(eid) from department
+select * from department
+
+create table ttt(tid int, tcity varchar(40))
+insert into ttt values(101,'delhi')
+insert into ttt values(102,'delhi')
+insert into ttt values(103,'delhi')
+insert into ttt values(104,'mumbai')
+insert into ttt values(105,'mumbai')
+insert into ttt values(106,'chennai')
+insert into ttt values(107,'chennai')
+insert into ttt values(108,'up')
+select * from ttt
+select tcity,count(tcity) as TotalCity from ttt group by tcity
+
+'group by for multiple column'
+SELECT  tid,tname FROM teacher GROUP BY tid,tname;
+
+'having'
+SELECT * FROM teacher GROUP BY tid,tname HAVING  tid=20001;
+SELECT * FROM teacher where tid=20001 GROUP BY tid,tname 
+
+'find students'
+SELECT s1.sname, count(s1.sid) AS total_student FROM student AS s1 LEFT JOIN teacher AS t1 ON s1.sid = t1.sid GROUP BY s1.sname HAVING total_student>=1
+
+select * from teacher
+select * from student
+'sub query'
+'Find the teacher information according to teacher age and student id'
+SELECT * FROM teacher WHERE sid IN (SELECT DISTINCT sid FROM student WHERE tage>30);
+SELECT  tid,tname FROM teacher WHERE tage = (SELECT MAX(tage) FROM teacher);
+select * from teacher
+'Subqueries with the INSERT Statement'
+CREATE TABLE t1 AS SELECT * FROM teacher;
+select * from t
+INSERT INTO t  SELECT * FROM teacher  WHERE tid IN (SELECT tid FROM teacher) ;
+select * from t1
+
+'Subqueries with the update Statement'
+UPDATE teacher  SET tsalary = tsalary * 0.25 WHERE tage IN (SELECT tage FROM t WHERE tage >= 27 );
+select * from teacher
+alter table teacher add tsalary int
+desc teacher
+update teacher set tsalary=20010 where tid=20001
+update teacher set tsalary=24522 where tid=20002
+update teacher set tsalary=22130 where tid=20003
+update teacher set tsalary=10900 where tid=20004
+update teacher set tsalary=56443 where tid=20005
+update teacher set tsalary=13200 where tid=20006
+
+
+'Subqueries with the DELETE Statement'
+DELETE FROM teacher WHERE tage IN (SELECT tage FROM t WHERE tage >= 45 );
+select * from teacher
+'Co-related nested queries'
+SELECT tid,tname FROM teacher t1 WHERE EXISTS (SELECT tid FROM teacher t2 WHERE t1.sid = t2.sid)
