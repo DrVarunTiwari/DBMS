@@ -1,0 +1,85 @@
+Join Command Example , Use of Primary Key , Use of Foreign Key
+
+
+create database sports
+use sports
+
+select * from team
+create table game(mid int primary key,mdate date,stadium varchar(30),team1 varchar(30),team2 varchar(40))
+create table team(tid varchar(30) primary key, teamname varchar(30),coach varchar(30))
+create table goal(mid int,tid varchar(30),player varchar(40),gtime varchar(30),foreign key(mid) references game(mid),foreign key(tid) references  team(tid))
+insert into game values(1001,'2008-7-04','Delhi','Agr','Luck')
+insert into game values(1002,'2008-7-04','Mumbai','Kan','Ker')
+insert into game values(1003,'2012-6-12','Delhi','Luck','Ker')
+insert into game values(1004,'2012-6-12','Chennai','Agr','Kan')
+
+select * from game
+
+insert into goal values(1001,'Agr','Raju Pratap',18)
+insert into goal values(1001,'Luck','Gaurav Kumar',50)
+insert into goal values(1002,'Kan','Karim',13)
+insert into goal values(1002,'Ker','Shubahsh Rastogi',70)
+insert into goal values(1003,'Luck','chaitnaya Mandal',34)
+insert into goal values(1003,'Ker','Asutosh Rana',54)
+insert into goal values(1004,'Agr','Piyush Mishra',47)
+insert into goal values(1004,'Kan','Syed Ali',87)
+
+select * from goal
+
+insert into team values('Agr','Agra','Suresh Kumar')
+insert into team values('Luck','Lucknow','Ramesh Mehra')
+insert into team values('Kan','Kanpur','Kavish Tiwari')
+insert into team values('Ker','Kerla','Stelan Mathew')
+select * from team
+select * from goal
+
+ 'show the mid and player ,gtime for all goals scored by Agra.'
+select mid, player,gtime from goal where tid = 'Agr'
+
+'To identify Player where middle name start from Kumar.'
+'To identify coach where middle name start from Tiwari.'
+select mid,player from goal where player like '%Kumar%'
+ select tid,coach from team where coach like '%Tiwari%'
+select team1, team2, player from game inner join goal on game.mid=goal.mid where player like "%Kumar%"
+select * from game
+select * from team
+
+select * from game
+'Show mid, stadium, team1, team2 for just game mid is 1003'
+select mid,stadium,team1,team2 from game where mid = 1003
+
+'show the player, tid, stadium and mdate for every Lucknow goal'
+select player, tid, stadium, mdate from game inner join goal on game.mid=goal.mid WHERE tid = 'Luck' 
+
+'Show player, coach, gtime for all goals scored in the first 20 minutes gtime<=20'
+select player, coach, gtime from team inner join goal on team.tid=goal.tid WHERE gtime<=20
+
+select * from team
+select * from goal
+select * from game
+'show the name of all players who scored a goal against Kanpur. '
+select distinct player from goal inner join game on goal.mid =game.mid where team1 = 'Kan' OR team2 = 'Kan' AND tid != 'Kan'
+
+
+'Show teamname and the total number of goals scored.'
+select teamname, count(tid) from team inner join goal on team.tid = goal.tid group by teamname
+
+'For every match involving 'Agr', show the mid, date and the number of goals scored. '
+select mdate from game inner join goal on goal.mid =game.mid where team1 = 'Agr' OR team2 = 'Agr' 
+
+'For every match where 'Agr' scored, show matchid, match date and the number of goals scored by 'Agr' '
+select mdate, count(player) from game inner join goal on (game.mid = goal.mid) WHERE tid = 'Agr' group by game.mid
+
+'Show the stadium and the number of goals scored in each stadium.'
+select stadium, COUNT(player) goals_scored from game inner join goal on game.mid = goal.mid group by stadium
+
+
+
+
+
+
+
+
+
+
+
