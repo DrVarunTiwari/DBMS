@@ -1,5 +1,4 @@
-Join Command Example , Use of Primary Key , Use of Foreign Key
-
+These SQl Commands will run on MySQL.
 
 create database sports
 use sports
