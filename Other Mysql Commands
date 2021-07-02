@@ -36,12 +36,12 @@ insert into student values(11005,'ajit',23,'MCA','Java',null)
 select * from student
 
 create table teacher(tid int primary key,tname varchar(30),tage int, tsubject varchar(30),sid int, foreign key(sid) references student(sid))
-insert into teacher values(20001,'vikas sir',40,'c',11001)
-insert into teacher values(20002,'varun',36,'c',11001)
-insert into teacher values(20003,'sanjay',40,'Math',11002)
-insert into teacher values(20004,'bijoy',36,'Java',11003)
-insert into teacher values(20005,'ruchi',40,'DS',11004)
-insert into teacher values(20006,'deepika',31,'DE',11005)
+insert into teacher values(20001,'shubhash',40,'c',11001)
+insert into teacher values(20002,'vivek',36,'c',11001)
+insert into teacher values(20003,'sanjeev',40,'Math',11002)
+insert into teacher values(20004,'rishabh',36,'Java',11003)
+insert into teacher values(20005,'suman',40,'DS',11004)
+insert into teacher values(20006,'archana',31,'DE',11005)
 
 
 select * from employee
