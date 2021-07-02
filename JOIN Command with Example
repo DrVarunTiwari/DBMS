@@ -31,7 +31,7 @@ insert into team values('Luck','Lucknow','Ramesh Mehra')
 insert into team values('Kan','Kanpur','Kavish Tiwari')
 insert into team values('Ker','Kerla','Stelan Mathew')
 select * from team
-select * from goal
+
 
  'show the mid and player ,gtime for all goals scored by Agra.'
 select mid, player,gtime from goal where tid = 'Agr'
